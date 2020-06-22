@@ -1,6 +1,142 @@
+body {
+  max-width: 90%;
+  background-color: rgba(255, 195, 104, 0.313);
+  margin: 0 auto;
+}
+
 h1 {
-  color: aqua;
-  p {
-    font-size: 14px;
+  color: black;
+  font-size: 22px;
+  background-color: white;
+  border-radius: 5px;
+  padding: 5px;
+}
+header {
+  color: rgba(255, 165, 29, 0.857);
+  font-size: 22px;
+  background-color: white;
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+main {
+  background-color: white;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+p {
+  font-weight: bold;
+}
+
+button {
+  font-size: 10px;
+  font-weight: bold;
+  padding: 5px 8px;
+  background-color: rgba(255, 165, 29, 0.857);
+  color: #fff;
+  border-style: none;
+  border-radius: 5px;
+}
+
+
+table {
+  border-collapse: collapse;
+  width:100%;
+  font-size: 12px;
+}
+
+td{
+  // border: 2px solid;
+  padding: 0;
+  // border-collapse: collapse
+}
+
+.head > li {
+  font-weight: bold;
+}
+
+.username-input {
+  font-size: 15px;
+}
+
+.body > li {
+  font-size: 12px;
+}
+
+.song-checkbox input {
+  transform:scale(1.5);
+}
+
+#sheet input {
+  width: 20px;
+}
+
+.title {
+  width: 52px;
+}
+
+td.title {
+  width: 60px;
+}
+
+.gt {
+  width:35px;
+  text-align:center;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  padding: 0;
+}
+
+.table {
+  margin-top:10px;
+}
+
+.display-block {
+  display: block;
+}
+.display-none {
+  display: none;
+}
+.display-inline {
+  display: inline-block;
+}
+
+.width {
+  width: 48px;
+}
+
+.supplement-message {
+  color: rgba(0, 0, 0, 0.421);
+  font-size: 10px;
+}
+
+#form ,#sheet {
+  padding-left: 5px;
+  padding-right: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+@media screen and (min-width:768px) and ( max-width:1024px) {
+body {
+  max-width: 40%;
+}
+}
+@media screen and (min-width:1024px) {
+  body {
+    max-width: 30%;
   }
 }

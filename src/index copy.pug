@@ -1,0 +1,60 @@
+-
+  const ttl = "スタジオ管理シート"
+
+doctype
+html(lang="ja")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width,initial-scale=1.0")
+    title #{ttl}
+    link(rel="stylesheet" href="css/style.css")
+  body
+    header
+      h1 #{ttl}
+    main
+      p お名前
+      input#userName(type="text" placeholder="名前を入力してください")
+      table.table
+        thead
+          tr
+            th 課題曲
+            th Vo
+            th Gt(Lead)
+            th Gt(Side)
+            th Ba
+            th Dr
+        tbody
+          tr
+            td ソラニン
+            td
+              input(type="checkbox")
+            td
+              input(type="checkbox")
+            td
+              input(type="checkbox")
+            td
+              input(type="checkbox")
+            td
+              input(type="checkbox")
+          tr
+          tr
+            td 拝啓、少年よあああああ
+            td
+              input(type="checkbox")
+            td
+              input(type="checkbox")
+            td
+              input(type="checkbox")
+            td
+              input(type="checkbox")
+            td
+              input(type="checkbox")
+          tr
+
+
+
+      div#result(style="background-color:#f4ca3630")
+
+    script(src="https://www.gstatic.com/firebasejs/7.15.3/firebase-app.js")
+    script(src="https://www.gstatic.com/firebasejs/7.15.3/firebase-analytics.js")
+    script(src="js/index.js")

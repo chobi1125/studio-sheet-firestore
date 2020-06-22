@@ -12,41 +12,17 @@ html(lang="ja")
   body
     h1 #{ttl}
     header
-      button#changeBtn(onclick="changeFC()") 管理シート
+      button#changeBtn(onclick="changeFC()") 管理
       button#loginBtn.display-inline(onclick="loginFC()") ログイン
       button#logoutBtn.display-none(onclick="logoutFC()") ログアウト
       p.supplement-message ※ログインすると登録後の編集が可能です。みんなの負担減！
     main
-      section#form.display-block
-        p お名前
-        input#userName.username-input(type="text" placeholder="名前を入力してください")
-        .table
-          ul.flex.head
-            li.title 課題曲
-            li Vo
-            li(style="text-align:center;") Gt<br><span style="font-size:10px;">(Lead)<span>
-            li(style="text-align:center;") Gt<br><span style="font-size:10px;">(Side)<span>
-            li Ba
-            li Dr
-        #songCheckboxAll
-          each song,key in song_list 
-            ul.flex.body.song-checkbox
-              li.title #{song} 
-              input(type="checkbox" id=`vo${key}`)
-              input(type="checkbox" id=`gtLead${key}`)
-              input(type="checkbox" id=`gtSide${key}`)
-              input(type="checkbox" id=`ba${key}`)
-              input(type="checkbox" id=`dr${key}`)
-          ul.flex.body.song-checkbox
-            li.title 見学 
-            input#visiter(type="checkbox")
-
-        button(onclick="addFC()") 送信
-      section#sheet.display-none
+      section#sheet.display-block
         p#peopleNumber
+
         table(border="1")
           tr
-            td.title 課題曲
+            td 課題曲
             td Vo
             td Gt<br><span style="font-size:10px;">(Lead)<span>
             td Gt<br><span style="font-size:10px;">(Side)<span>
@@ -54,18 +30,56 @@ html(lang="ja")
             td Dr
           each song,key in song_list             
             tr
-              td #{song}
+              td.title #{song}
               td ふわふわ<br>ひつじ<br>ぱげぱげ
               td ふわふわ<br>ひつじ<br>ぱげぱげ
               td ふわふわ<br>ひつじ<br>ぱげぱげ
               td ふわふわ<br>ひつじ<br>ぱげぱげ
               td ふわふわ<br>ひつじ<br>ぱげぱげ
+              
+        p 参加者人数
+
+        table
+          tr
+            td 課題曲
+            td Vo
+            td Gt<br><span style="font-size:10px;">(Lead)<span>
+            td Gt<br><span style="font-size:10px;">(Side)<span>
+            td Ba
+            td Dr
+          each song,key in song_list             
+            tr
+              td.title #{song} 
+              td: input(type="checkbox" id=`vo${key}`)
+              td: input(type="checkbox" id=`gtLead${key}`)
+              td: input(type="checkbox" id=`gtSide${key}`)
+              td: input(type="checkbox" id=`ba${key}`)
+              td: input(type="checkbox" id=`dr${key}`)
+
+        //- ul.flex.head
+        //-   li.title 課題曲
+        //-   li Vo
+        //-   li(style="text-align:center;") Gt<br><span style="font-size:10px;">(Lead)<span>
+        //-   li(style="text-align:center;") Gt<br><span style="font-size:10px;">(Side)<span>
+        //-   li Ba
+        //-   li Dr
+        //- each song,key in song_list 
+        //-   ul.flex.body.song-checkbox
+        //-     li.title #{song} 
+        //-     li(id=`vo${key}`)
+        //-       input(type="text")
+        //-     li.gt(id=`gt-lead${key}`)
+        //-       input(type="text")
+        //-     li.gt(id=`gt-side${key}`)
+        //-       input(type="text")
+        //-     li(id=`ba${key}`)
+        //-       input(type="text")
+        //-     li(id=`dr${key}`) 
+        //-       input(type="text")
 
     script(src="https://www.gstatic.com/firebasejs/7.15.3/firebase-app.js")
     script(src="https://www.gstatic.com/firebasejs/7.15.3/firebase-analytics.js")
     script(src="https://www.gstatic.com/firebasejs/7.15.3/firebase-database.js")
     script(src="https://www.gstatic.com/firebasejs/7.15.3/firebase-auth.js")
     script(src="js/firebase/init.js")
-    script(src="js/firebase/auth.js")
-    script(src="js/firebase/database.js")
     script(src="js/index.js")
