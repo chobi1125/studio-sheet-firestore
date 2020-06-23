@@ -1,23 +1,23 @@
-// ログインしている場合
+// ログインしている場合※ユーザーごと
 let loggedInFC = () => {
-  let login_user = firebase.auth().currentUser;
-  console.log(login_user.displayName);
-  console.log(login_user_data[1]);
-  // if前回名前を編集していない場合elseしていた場合
-  if (login_user.displayName != login_user_data[1]){
-    user_name.value = login_user_data[1];
+  console.log("loggedInFC");
+  // if初回登録の場合else登録済みの場合
+  if (firebase_db_user === null){
+    user_name.value = firebase.auth().currentUser.displayName;
   } else {
-    user_name.value = login_user.displayName;
+    user_name.value = firebase_db_user.name;
+    add_btn.textContent = "更新";
+    remove_btn.className = "display-inline";
   };
   login_btn.className = "display-none";
   logout_btn.className = "display-inline";
   supplement_message.textContent = "ログインありがとうございます！！送信したデータが確認できます";
-  if (login_user_data[0] != null) {
-    login_user_data[0].map((id) => {
+  // チェックタグの反映
+  if (firebase_db_user != null) {
+    firebase_db_user.id.map((id) => {
       let v_id = document.getElementById(id);
-      console.log(id)
-      v_id.checked = true;
-      checkbox_array.push(v_id);
+      v_id.checked = true; // input要素にcheck付ける
+      checkbox_array.push(id); // 登録時に使う配列にデータを初期値としてpush
     });
   };
 };

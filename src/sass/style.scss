@@ -20,10 +20,16 @@ header {
   margin-bottom: 10px;
 }
 
+select {
+  height: 23px;
+  width: 100px;
+}
+
 main {
   background-color: white;
   border-radius: 5px;
   padding: 5px;
+  margin-bottom: 20px; // スマホで下のボタン押しやすくする用
 }
 
 p {
@@ -53,6 +59,10 @@ td{
   // border-collapse: collapse
 }
 
+.td-width {
+  width: 50px;
+}
+
 .head > li {
   font-weight: bold;
 }
@@ -75,6 +85,16 @@ td{
 
 .title {
   width: 52px;
+}
+
+.validate-message {
+  color: red;
+  font-size: 12px;
+}
+
+.visiter-text{
+  font-size: 12px;
+  font-weight: lighter;
 }
 
 td.title {

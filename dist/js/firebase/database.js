@@ -1,50 +1,89 @@
-let all_data = [];
-let login_user_data = [];
-let firebase_db_latest;
+let firebase_db_all;
+let firebase_db_user; // ログイン中の自身のデータ
 
 // DB追加
 let addFC = () => {
-  console.log("addFC")
-  if(firebase.auth().currentUser != null) {
-    db.ref(`/users/${firebase.auth().currentUser.displayName}/`).set({
-      name:user_name.value,
-      id:checkbox_array // 配列で保存
-      // id:checkbox_array.toString() // 文字列で保存
-    });
-  } else {
-    db.ref(`/users/${user_name.value}/`).set({
-      name:user_name.value,
-      id:checkbox_array.toString()
-    });
-  }
+  if(beforeValidate()){
+    console.log("validate=true")
+    if(firebase.auth().currentUser != null){
+      if(firebase.auth().currentUser.uid === "dvOFmUwb6feFMshpO6kle4V0y7x2"){
+        console.log("root")
+        db.ref(`/users/root/${firebase.auth().currentUser.uid}/`).set({
+          name:"まさる",
+          id:checkbox_array
+        });
+      } else {
+        console.log("login")
+        db.ref(`/users/login/${user_name.value}/`).set({
+          name:user_name.value,
+          id:checkbox_array
+        });
+      };
+    } else {
+      console.log("not_login")
+      db.ref(`/users/not_login/${user_name.value}/`).set({
+        name:user_name.value,
+        id:checkbox_array
+      });
+    };
+    location.reload();
+  };
+}
+// DB削除
+let removeFC = () => {
+  db.ref(`/users/${firebase.auth().currentUser.displayName}`).remove();
 }
 // DB取得
 let databaseInitFC = () => {
-  let all_DB = db.ref(`/users`);
   // DB取得※usersを取得。配列キーの数を参考に参加者人数算出。
-  all_DB.on('child_added', (data) => {
-    console.log("全てのDBを取得")
+  db.ref(`/users`).once('value', (data) => {
     firebase_db_all = data.val();
-    all_data.push(firebase_db_all);
-    people_number.textContent = `参加者人数：${all_data.length}人`
+    console.log("全てのDBを取得,ユーザー数分実行")
+    console.log(firebase_db_all)
+    let not_login_number = firebase_db_all.not_login === undefined ? 0 : Object.keys(firebase_db_all.not_login).length;
+    let login_number = firebase_db_all.login === undefined ? 0 : Object.keys(firebase_db_all.login).length;
+    let root_number = firebase_db_all.root === undefined ? 0 : Object.keys(firebase_db_all.root).length;
+    let number = not_login_number + login_number + root_number;
+    people_number.textContent = `参加者人数：${number}人`
+    mkSheetFC();
+    userDataFC();
   });
+}
+
+let userDataFC = () => {
+  // DB取得※ログイン中の場合
   if (firebase.auth().currentUser != null){
-    console.log("Data取得※ログイン中")
-    let connect_DB = db.ref(`/users/${firebase.auth().currentUser.displayName}`);
-      // DB取得※ユーザー毎
-    connect_DB.on('child_added', (data) => {
-      firebase_db_latest = data.val();
-      console.log("login_user_data.push")
-      login_user_data.push(firebase_db_latest);
-      loggedInFC();
-    });
-    // DB更新が発生した際の処理(リロード)
-    connect_DB.on('child_changed', function(data) {
-      location.reload();
-    });
-    // DB削除が発生した際の処理(リロード)
-    connect_DB.on('child_removed', function(data) {
-      location.reload();
-    });
+    // rootの場合
+    if(firebase.auth().currentUser.uid === "dvOFmUwb6feFMshpO6kle4V0y7x2"){
+      let connect_DB = db.ref(`/users/root/${firebase.auth().currentUser.uid}`);
+      connect_DB.once('value', (data) => {
+        firebase_db_user = data.val();
+        loggedInFC();
+        rootFC();
+            // DB更新が発生した際の処理(リロード)
+        connect_DB.on('child_changed', function(data) {
+          location.reload();
+        });
+        // DB削除が発生した際の処理(リロード)
+        connect_DB.on('child_removed', function(data) {
+          location.reload();
+        });
+      });
+    // loginの場合
+    } else {
+      let connect_DB = db.ref(`/users/login/${firebase.auth().currentUser.uid}`);
+      connect_DB.once('value', (data) => {
+        firebase_db_user = data.val();
+        loggedInFC();
+        // DB更新が発生した際の処理(リロード)
+        connect_DB.on('child_changed', function(data) {
+          location.reload();
+        });
+        // DB削除が発生した際の処理(リロード)
+        connect_DB.on('child_removed', function(data) {
+          location.reload();
+        });
+      });
+    }
   }
 }

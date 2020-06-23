@@ -1,0 +1,23 @@
+{
+  "disconnectmessage" : "I disconnected!",
+  "users" : {
+    "login" : {
+      "ポポ" : {
+        "id" : "gt0",
+        "name" : "ポポ君"
+      }
+    },
+    "root" : {
+      "まさる" : {
+        "id" : "vo0",
+        "name" : "まさる"
+      }
+    },
+    "user" : {
+      "未ログイン" : {
+        "id" : "gt1",
+        "name" : "未ログイン"
+      }
+    }
+  }
+}

@@ -18,10 +18,15 @@ header {
   padding: 5px;
   margin-bottom: 10px; }
 
+select {
+  height: 23px;
+  width: 100px; }
+
 main {
   background-color: white;
   border-radius: 5px;
-  padding: 5px; }
+  padding: 5px;
+  margin-bottom: 20px; }
 
 p {
   font-weight: bold; }
@@ -43,6 +48,9 @@ table {
 td {
   padding: 0; }
 
+.td-width {
+  width: 50px; }
+
 .head > li {
   font-weight: bold; }
 
@@ -60,6 +68,14 @@ td {
 
 .title {
   width: 52px; }
+
+.validate-message {
+  color: red;
+  font-size: 12px; }
+
+.visiter-text {
+  font-size: 12px;
+  font-weight: lighter; }
 
 td.title {
   width: 60px; }
