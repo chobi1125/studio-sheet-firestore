@@ -25,6 +25,8 @@ let supplement_message = $("supplement-message");
 let root_message = $("rootMessage");
 let sheet_visiter = $("sheet_visiter");
 let first_time = $("first_time");
+let accounting = $("accounting");
+let accounting_text = $("accountingText");
 
 // js処理のための変数定義
 let checkbox_array = [];

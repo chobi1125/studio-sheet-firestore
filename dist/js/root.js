@@ -4,7 +4,8 @@ let edit_user_obj;
 let rootFC = () => {
   console.log("root");
   root_edit.className = "display-inline";
-  firebase_db_root.map((value) => {
+  accounting.className = "display-block";
+  firebase_mk_select.map((value) => {
     console.log(value.name);
     let option = el('option');
     option.value = value.name;
@@ -12,6 +13,14 @@ let rootFC = () => {
     option.id = value.name;
     root_edit.appendChild(option);
   })
+  // 会計処理
+  accountingFC();
+}
+
+// 会計金額の表示
+let accountingFC = () => {
+  let ttlMoney = number * 1500;
+  accounting_text.innerHTML = `今日の合計金額:${ttlMoney}円<br>※一律1500円で計算。初回の方考慮にできていません。`
 }
 
 // 編集したいユーザーをセレクトタグから選択
@@ -19,7 +28,7 @@ root_edit.addEventListener('change', (event) => {
   console.log("select");
   let eventElem = event.target;
   console.log(eventElem.value)
-  firebase_db_root.map((value) => {
+  firebase_mk_select.map((value) => {
     if (value.name === eventElem.value) {
       edit_user_obj = value;
     }
@@ -46,6 +55,8 @@ root_edit.addEventListener('change', (event) => {
   add_btn.className = "display-none";
   edit_btn.className = "display-none";
   remove_btn.className = "display-none";
+  user_name.readOnly = true;
+  user_name.value = "※名前の編集はできません"
 });
 
 // 更新ボタン
