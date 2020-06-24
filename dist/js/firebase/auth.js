@@ -1,12 +1,14 @@
 // ログインしている場合※ユーザーごと
 let loggedInFC = () => {
   console.log("loggedInFC");
+  console.log(firebase_db_user);
   // if初回登録の場合else登録済みの場合
   if (firebase_db_user === null){
     user_name.value = firebase.auth().currentUser.displayName;
   } else {
     user_name.value = firebase_db_user.name;
-    add_btn.textContent = "更新";
+    add_btn.className = "display-none";
+    edit_btn.className = "display-inline";
     remove_btn.className = "display-inline";
   };
   login_btn.className = "display-none";

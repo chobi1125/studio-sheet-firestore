@@ -1,6 +1,6 @@
 -
   const ttl = "第18回 スタジオ管理シート"
-  let song_list = ["君と夏フェス(10月まで)","ソラニン(10月まで)","青い栞","スターフィッシュ","刃","瞬間センチメンタル","C7"]
+  let song_list = ["ソラニン","拝啓、少年よ","青い栞","スターフィッシュ"]
 
 doctype
 html(lang="ja")
@@ -9,7 +9,7 @@ html(lang="ja")
     meta(name="viewport" content="width=device-width,initial-scale=1.0")
     title #{ttl}
     link(rel="stylesheet" href="css/style.css")
-  body.ly_cont
+  body
     h1 #{ttl}
     header
       button#changeBtn(onclick="changeFC()") 管理シート
@@ -20,7 +20,6 @@ html(lang="ja")
       section#form.display-block
         p お名前
         span#validateMessageName.display-none ※必須です
-        span#validateOverlapName.display-none ※名前が被っているので別の名前で入力お願いします！
         input#userName.username-input(type="text" placeholder="名前を入力してください")
         select#rootEdit.display-none(name="")
           option(value="") 選択
@@ -48,16 +47,12 @@ html(lang="ja")
           ul.flex.body.song-checkbox
             li.title 見学 
             input#visiter(type="checkbox")
-          ul.flex.body.song-checkbox
-            li.title 初参加 
-            input#first_time(type="checkbox")
 
         button#addBtn(onclick="addFC()") 送信
-        button#editBtn.display-none(onclick="editFC()") 更新
         button#removeBtn.display-none(onclick="removeFC()") 取消
         button#rootEditBtn.display-none(onclick="rootEditFC()") 更新(幹事)
         button#rootRemoveBtn.display-none(onclick="rootRemoveFC()") 取消(幹事)
-        p.supplement-message.display-none#rootMessage ※選択ユーザーの編集(幹事権限)。<br>自身の編集は再度リロードして行ってください。<br>ログインして登録しているユーザーの削除はできません。
+        p.supplement-message.display-none#rootMessage ※選択ユーザーの編集(幹事権限)。<br>自身の編集は再度リロードして行ってください。
       section#sheet.display-none
         p#peopleNumber
         table(border="1")
@@ -78,8 +73,6 @@ html(lang="ja")
               td(id=`sheet_dr${key}`)
         p 見学者
         p#sheet_visiter.visiter-text
-        p 初参加
-        p#sheet_first_time.visiter-text
 
     script(src="https://www.gstatic.com/firebasejs/7.15.3/firebase-app.js")
     script(src="https://www.gstatic.com/firebasejs/7.15.3/firebase-analytics.js")
@@ -89,6 +82,5 @@ html(lang="ja")
     script(src="js/firebase/auth.js")
     script(src="js/firebase/database.js")
     script(src="js/index.js")
-    script(src="js/validate.js")
     script(src="js/sheet.js")
     script(src="js/root.js")

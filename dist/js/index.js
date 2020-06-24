@@ -6,6 +6,7 @@ let el = e => document.createElement(e);
 // HTMLより取得した要素の変数定義
 let change_btn = $("changeBtn");
 let add_btn = $("addBtn");
+let edit_btn = $("editBtn");
 let remove_btn = $("removeBtn");
 let root_edit_btn = $("rootEditBtn");
 let root_remove_btn = $("rootRemoveBtn");
@@ -17,11 +18,13 @@ let root_edit = $("rootEdit");
 let form = $("form");
 let sheet = $("sheet");
 let validate_message_name = $("validateMessageName");
+let validate_overlap_name = $("validateOverlapName");
 let validate_message_check = $("validateMessageCheck");
 let song_checkbox_all = $("songCheckboxAll");
 let supplement_message = $("supplement-message");
 let root_message = $("rootMessage");
 let sheet_visiter = $("sheet_visiter");
+let first_time = $("first_time");
 
 // js処理のための変数定義
 let checkbox_array = [];
@@ -41,40 +44,6 @@ let changeFC = () => {
   }
 }
 
-let beforeValidate = () => {
-  beforeValidateName();
-  beforeValidateCheck();
-  if (beforeValidateName() === true && beforeValidateCheck() === true){
-    return true;
-  };
-}
-
-// 名前のバリデーション
-let beforeValidateName = () => {
-  if(user_name.value != ""){
-    return true;
-  } else {
-    console.log("validate name fail")
-    validate_message_name.className = "display-block validate-message"
-  }
-}
-
-user_name.addEventListener('change', () => {
-  if (user_name.value !== "") {
-    validate_message_name.className = "display-none";
-  }
-})
-
-// チェックボックスのバリデーション
-let beforeValidateCheck = () => {
-  if(checkbox_array.length != 0){
-    return true;
-  } else {
-    console.log("validate check fail")
-    validate_message_check.className = "display-block validate-message"
-  }
-}
-
 // DBに追加するIDタグの配列生成
 song_checkbox_all.addEventListener('change', (event) => {
   let eventElem = event.target;
@@ -88,9 +57,7 @@ song_checkbox_all.addEventListener('change', (event) => {
     let delKey = checkbox_array.indexOf(eventElem.id);
     checkbox_array.splice(delKey,1);
   }
+  checkValidateMessageNone();
   l("change");
-  if (checkbox_array.length != 0) {
-    validate_message_check.className = "display-none";
-  }
 });
 

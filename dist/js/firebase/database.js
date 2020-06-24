@@ -14,7 +14,8 @@ let addFC = () => {
         });
       } else {
         console.log("login")
-        db.ref(`/users/login/${user_name.value}/`).set({
+        db.ref(`/users/login/${firebase.auth().currentUser.uid}/`).set({
+          // name:user_name.value,
           name:user_name.value,
           id:checkbox_array
         });
@@ -28,6 +29,36 @@ let addFC = () => {
     };
     location.reload();
   };
+}
+// DB更新
+let editFC = () => {
+  console.log("edit")
+  // checkのバリデートだけ
+  if(beforeValidateCheck()){
+    if(firebase.auth().currentUser != null){
+      if(firebase.auth().currentUser.uid === "dvOFmUwb6feFMshpO6kle4V0y7x2"){
+        console.log("root")
+        db.ref(`/users/root/${firebase.auth().currentUser.uid}/`).set({
+          name:"まさる",
+          id:checkbox_array
+        });
+      } else {
+        console.log("login")
+        db.ref(`/users/login/${firebase.auth().currentUser.uid}/`).set({
+          // name:user_name.value,
+          name:user_name.value,
+          id:checkbox_array
+        });
+      };
+    } else {
+      console.log("not_login")
+      db.ref(`/users/not_login/${user_name.value}/`).set({
+        name:user_name.value,
+        id:checkbox_array
+      });
+    };
+    location.reload();
+  }
 }
 // DB削除
 let removeFC = () => {
@@ -45,9 +76,9 @@ let databaseInitFC = () => {
     let root_number = firebase_db_all.root === undefined ? 0 : Object.keys(firebase_db_all.root).length;
     let number = not_login_number + login_number + root_number;
     people_number.textContent = `参加者人数：${number}人`
-    mkSheetFC();
-    userDataFC();
   });
+  mkSheetFC();
+  userDataFC();
 }
 
 let userDataFC = () => {
