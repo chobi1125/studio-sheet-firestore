@@ -2,7 +2,7 @@ let firebase_db_all;
 let firebase_db_user; // ログイン中の自身のデータ
 let number; // 参加者人数
 // ルートユーザー [まさる、サークル、ならちゃん]
-let root_uid = ["dvOFmUwb6feFMshpO6kle4V0y7x2","6UVC0qLCqBhxcF6VquT3oOhq3YM2","syD2tIexnhQs0omrsQYqoePVGHn2"]
+let root_uid = ["dvOFmUwb6feFMshpO6kle4V0y7x2","6UVC0qLCqBhxcF6VquT3oOhq3YM2","syD2tIexnhQs0omrsQYqoePVGHn2","yO4ask9dDMOBt74CvlEOGkDMCkV2","Ps7307jsQ4hVaxb4kL2c8uXVz0j2"];
 
 // DB追加
 let addFC = () => {
