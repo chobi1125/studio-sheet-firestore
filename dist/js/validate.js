@@ -12,7 +12,7 @@ let beforeValidate = () => {
 let beforeValidateName = () => {
   // 名前かぶりのチェックをした後に空じゃないかチェック
   // 名前かぶりのメッセージ
-  firebase_name_all.map((obj) => {
+  firebase_db_all.map((obj) => {
     all_name.push(obj.name);
   })
   console.log(all_name.indexOf(user_name.value));

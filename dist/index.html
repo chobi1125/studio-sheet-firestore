@@ -4,7 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>第18回 スタジオ管理シート</title>
+    <link rel="icon" href="img/icons/icon-180×180.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/icons/icon-180×180.jpg">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
   </head>
   <body>
     <h1 class="ly ly-title">第18回 スタジオ管理シート</h1>
@@ -106,7 +109,7 @@
             <button class="display-none" id="removeBtn" onclick="removeFC()">取消</button>
             <button class="display-none" id="rootEditBtn" onclick="rootEditFC()">更新(幹事)</button>
             <button class="display-none" id="rootRemoveBtn" onclick="rootRemoveFC()">取消(幹事)</button>
-            <p class="supplement-message display-none" id="rootMessage">※選択ユーザーの編集(幹事権限)。<br>自身の編集は再度リロードして行ってください。<br>ログインして登録しているユーザーの削除はできません。</p>
+            <p class="supplement-message display-none" id="rootMessage">※選択ユーザーの編集(幹事権限)。<br>自身の編集は再度リロードして行ってください。</p>
           </div>
         </div>
       </div>
@@ -188,10 +191,10 @@
         </div>
       </div>
     </main>
-    <script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-analytics.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
     <script src="js/firebase/init.js"></script>
     <script src="js/firebase/auth.js"></script>
     <script src="js/firebase/database.js"></script>

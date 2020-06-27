@@ -1,54 +1,49 @@
-let edit_user_obj;
+let edit_user;
+let editUserKey;
 
-// rootユーザー用の編集ボタン表示
+// rootユーザー
 let rootFC = () => {
-  console.log("root");
+  // console.log("root");
   root_select.className = "display-inline name-select";
   accounting.className = "display-block";
-  firebase_mk_select.map((value) => {
-    console.log(value.name);
-    let option = el('option');
-    option.value = value.name;
-    option.textContent = value.name;
-    option.id = value.name;
-    root_select.appendChild(option);
-  })
-  // 会計処理
-  accountingFC();
-}
+  // セレクトタグのオプションタグ作成
+  firebase_db_all.map((obj) => {
+    if (obj.state !== "root") {
+      let option = el('option');
+      option.value = obj.name;
+      option.textContent = obj.name;
+      option.id = obj.name;
+      root_select.appendChild(option);
+    };
+  });
+};
 
 // 会計金額の表示
 let accountingFC = () => {
-  let ttlMoney = number * 1500;
-  accounting_text.innerHTML = `今日の合計金額:${ttlMoney}円<br>※一律1500円で計算。初回の方考慮できていません。`
-}
+  accounting_text.innerHTML = 
+  `今日の合計金額:${firebase_db_all.length * 1500}円<br>※一律1500円で計算。初回の方考慮できていません。`
+};
 
 // 編集したいユーザーをセレクトタグから選択
 root_select.addEventListener('change', (event) => {
   console.log("select");
   let eventElem = event.target;
-  console.log(eventElem.value)
-  firebase_mk_select.map((value) => {
-    if (value.name === eventElem.value) {
-      edit_user_obj = value;
+  firebase_db_all.map((obj) => {
+    if (obj.name === eventElem.value) {
+      edit_user = obj;
     }
-  })
-  console.log(edit_user_obj);
+  });
   // チェックをリセットする
   Array.from(all_checkbox).map((nodelist) => {
     nodelist.checked = false;
-  })
+  });
   // チェックを付ける
-  if(edit_user_obj.id != undefined){
-    edit_user_obj.id.map((id) => {
-      let v_id = document.getElementById(id);
-      v_id.checked = true; // input要素にcheck付ける
-    });
-    checkbox_array = edit_user_obj.id; // 登録時に使う配列にデータを初期値として0ベースで更新
-  } else {
-    checkbox_array = [];
-  }
-
+  edit_user.id.map((id) => {
+    let v_id = document.getElementById(id);
+    v_id.checked = true; // input要素にcheck付ける
+  });
+  // 登録時に使う配列にデータを初期値として0ベースで更新
+  checkbox_array = edit_user.id; 
   root_edit_btn.className = "display-inline";
   root_remove_btn.className = "display-inline";
   root_message.className = "display-blcok supplement-message";
@@ -56,64 +51,47 @@ root_select.addEventListener('change', (event) => {
   edit_btn.className = "display-none";
   remove_btn.className = "display-none";
   user_name.readOnly = true;
-  user_name.value = "※名前の編集はできません"
+  user_name.value = "※名前の編集不可"
+  // 編集中のユーザーのキーを探る 
+  editUserKey = Object.keys(firebase_db_all) //ここまでで ["0", "1", "2"]
+  .filter(function(value) {
+    return firebase_db_all[value].name == edit_user.name; // 該当した場合配列を返す
+  });
 });
 
-// 更新ボタン
+// ルート更新ボタン
 let rootEditFC = () => {
-  console.log("rootEditFC!!")
-  console.log(edit_user_obj);
-  console.log(firebase_db_all.not_login)
-  console.log(firebase_db_all.login)
-  let checkNotLoginUser;
-  let checkLoginUser;
-
-  // 編集したいユーザーが未ログインユーザーの場合
-  if(firebase_db_all.not_login !== undefined){
-    checkNotLoginUser = Object.keys(firebase_db_all.not_login) //ここまでで名前 ["test3", "testt2"]
-    .filter(function(value) {
-      console.log(value); // test3とtestt2をそれぞれ1回ずつ出力
-      return firebase_db_all.not_login[value].name == edit_user_obj.name; // 該当した場合配列を返す
-      // firebase_db_all.not_login.test3.nameを出力している
-    });
-  }
-  // 編集したいユーザーがログインユーザーの場合
-  if(firebase_db_all.login !== undefined){
-    checkLoginUser = Object.keys(firebase_db_all.login) // uid取得
-    .filter((value) => { // valueはuid
-      return firebase_db_all.login[value].name == edit_user_obj.name;
-    });
-    // firebase_db_all.login.PjHpKypnuVYPoAIhrc3pUmwawMK2.nameを出力している
-  }
-
-  if(checkNotLoginUser !== undefined ){  
-    console.log(checkNotLoginUser)
-    if (checkNotLoginUser.length === 1){
-      if(beforeValidateCheck()){
-        db.ref(`/users/not_login/${edit_user_obj.name}/`).update({
-          id:edit_user_obj.id,
-          name:edit_user_obj.name
-        });
-      }
-    }
-  } 
-  if (checkLoginUser !== undefined) {
-    console.log(checkLoginUser[0])
-    if (checkLoginUser.length === 1) {
-      if(beforeValidateCheck()){
-        db.ref(`/users/login/${checkLoginUser[0]}/`).update({
-          id:edit_user_obj.id,
-          name:edit_user_obj.name
-        });
-      }
-    }
-  }
+  console.log("rootEditFC!!");
+  // ログインしていないユーザーの場合
+  if(firebase_db_all[editUserKey].state === "not_login" ){  
+    console.log("NotLoginUser")
+    if(beforeValidateCheck()){
+      db.collection("users").doc(edit_user.name).update({
+        id:edit_user.id
+      });
+    };
+  };
+  // ログインしているユーザーの場合
+  if (firebase_db_all[editUserKey].state === "login") {
+    if(beforeValidateCheck()){
+      db.collection("users").doc(firebase_db_key[editUserKey]).update({
+        id:edit_user.id,
+      });
+    };
+  };
   location.reload();
 };
 
-// 削除ボタン
+// ルート削除ボタン※未ログインユーザーのみ
 let rootRemoveFC = () => {
-  console.log("rootRemoveFC!!")
-  db.ref(`/users/not_login/${edit_user_obj.name}/`).remove();
-  location.reload();
-}
+  console.log("rootRemoveFC!!");
+  if(window.confirm("本当に削除してもいいですか？")){
+    if(firebase_db_all[editUserKey].state === "not_login" ){  
+      db.collection("users").doc(edit_user.name).delete();
+    };
+    if (firebase_db_all[editUserKey].state === "login") {
+      db.collection("users").doc(firebase_db_key[editUserKey]).delete();
+    };
+    location.reload();
+  };
+};
